@@ -2,9 +2,9 @@
 
 ## Screenshots
 
-![pc view](photos/pc.png)
+![pc view](./images/pc.png)
 
-![mobile view](photos/mobile.png)
+![mobile view](./images/mobile.png)
 
 this project is devided by two filders frontend and backend.
 ## Project Description

@@ -1,5 +1,11 @@
 ## Welcome to a practise project task manager.
 
+## Screenshots
+
+![pc view](photos/pc.png)
+
+![mobile view](photos/mobile.png)
+
 this project is devided by two filders frontend and backend.
 ## Project Description
 This is a simple Task Manager practice project built with React (frontend) and Node.js/Express (backend). 

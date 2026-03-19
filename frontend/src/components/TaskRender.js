@@ -1,16 +1,14 @@
-// const task={
-// id: number,
-// title: string,
-// description: string,
-// completed: boolean,
-// createdAt: Date,
-// priority: 'low' | 'medium' | 'high'
-
 import Checkbox from "./Checkbox"
 
-function TaskRender({tasks ,onToggleChange}) {
+function TaskRender({tasks ,onToggleChange,getSelectedTask,getId}) {
     const handleToggle=(taskId)=>{
         onToggleChange(taskId)
+    }
+    const handleSelectedTask=(task)=>{
+        getSelectedTask(task)
+    }
+    const handleDelete=(taskId)=>{
+        getId(taskId)
     }
   return (
     <ul>
@@ -20,6 +18,8 @@ function TaskRender({tasks ,onToggleChange}) {
         <p>{task.description}</p>
         <p>{task.priority}</p>
         <Checkbox label={'done'} value={task.completed} onChange={()=>handleToggle(task.id)}/>
+        <button onClick={()=>handleSelectedTask(task)}>edit</button>
+        <button onClick={()=>handleDelete(task.id)}>delete</button>
     </li>
 )
 )}

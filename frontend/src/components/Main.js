@@ -10,12 +10,6 @@ function Main() {
    const [popupOpen, setPopupOpen] = useState(false);
    const [mode, setMode] = useState('create');
    const [selectedTask,setSelectedTask]=useState(null);
-   const [formdata,setFormdata]= useState({
-        title:'',
-        description:'',
-        priority:'high',
-    });
-
 
 useEffect(() => {
     fetchTasks()
@@ -78,6 +72,25 @@ try {
     console.error(error);
     }
   }
+  const getSelectedTask=(task)=>{
+    setMode('edit');
+    setSelectedTask(task)
+    setPopupOpen(true);
+  }
+  const handleDelete=async(taskId)=>{
+ try {
+     const response=await fetch(`http://localhost:4000/api/tasks/${taskId}`,{
+            method:'DELETE',
+            headers:{'Content-Type': 'application/json'},
+        })
+    
+    if (!response.ok) throw new Error('Failed to delete task')
+    await fetchTasks();
+
+    } catch (error) {
+    console.error(error);
+    }
+  }
   return (
     <main>
      <button onClick={handleAddTask}>
@@ -96,12 +109,17 @@ try {
 </select>
 <button type='submit'>filter</button>
         </form>
-        <TaskRender tasks={tasks} onToggleChange={handleToggle}/>
+        <TaskRender 
+        tasks={tasks}
+        onToggleChange={handleToggle}
+        getSelectedTask={getSelectedTask}
+        getId={handleDelete}
+        />
      </div>
 <TaskPopup
  isOpen={popupOpen}
  mode={mode}
- taskData={formdata}
+ task={selectedTask}
  onClose={()=>setPopupOpen(false)}
  onSave={handleSaveTask}
 />

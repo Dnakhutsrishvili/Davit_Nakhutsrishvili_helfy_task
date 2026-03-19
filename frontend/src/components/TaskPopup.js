@@ -68,8 +68,8 @@ function TaskPopup({ mode, task, isOpen, onClose, onSave }) {
         onChange={handleChange}
         disabled={mode==='view'}>
             <option value='low'>Low</option>
-            <option value='low'>Medium</option>
-            <option value='low'>High</option>
+            <option value='medium'>Medium</option>
+            <option value='high'>High</option>
         </select>
         </div>
     </div>

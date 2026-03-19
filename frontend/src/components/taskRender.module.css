@@ -1,11 +1,12 @@
 .carousel {
     display: relative;
-    width: 200px;
-    overflow: scroll;
+    overflow: hidden;
     padding: 10px;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     margin: 0 auto;
+    width: 100%;
+    max-width: 300px;
 }
 
 .carousel::-webkit-scrollbar {
@@ -18,9 +19,16 @@
 }
 
 .carousel ul li {
-    width: 200px;
+    width: 300px;
     height: 200px;
     list-style: none;
     scroll-snap-align: start;
     cursor: pointer;
+    flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+    .carousel {
+        max-width: 920px;
+    }
 }

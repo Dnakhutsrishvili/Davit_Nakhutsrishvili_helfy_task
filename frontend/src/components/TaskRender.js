@@ -4,7 +4,7 @@ import styles from './taskRender.module.css'
 
 function TaskRender({tasks ,onToggleChange,getSelectedTask,getId}) {
     const [currentIndex, setCurrentIndex] = useState(0)
-    const itemWidth = 300 
+    const [itemsPerView, setItemsPerView] = useState(1)
     let carouselRef=useRef(null)
     const handleToggle=(taskId)=>{
         onToggleChange(taskId)
@@ -16,32 +16,40 @@ function TaskRender({tasks ,onToggleChange,getSelectedTask,getId}) {
         getId(taskId)
     }
     
-// useEffect(() => {
-//   const interval = setInterval(() => {
-//     handleRightClick();
-//   }, 2000);
+useEffect(() => {
+  const handleResize = () => {
+    setItemsPerView(window.innerWidth > 768 ? 3 : 1)
+  }
+  handleResize()
+  window.addEventListener('resize', handleResize)
+  
+  const interval = setInterval(() => {
+    handleRightClick();
+  }, 6000);
 
-//   return () => clearInterval(interval);
-// });
+  return () => {
+    window.removeEventListener('resize', handleResize)
+    clearInterval(interval)
+  }
+})
 
  function handleRightClick() {
-    let newIndex = currentIndex + 1
+  let newIndex = currentIndex + itemsPerView
   if(newIndex >= tasks.length) {
-        newIndex = 0
-    }
-    setCurrentIndex(newIndex)
-    carouselRef.current.scrollLeft = newIndex * itemWidth;
+    newIndex = 0
   }
+  setCurrentIndex(newIndex)
+  carouselRef.current.scrollLeft = newIndex * 300;
+}
 
 function handleLeftClick() {
-    let newIndex = currentIndex - 1
+  let newIndex = currentIndex - itemsPerView
   if(newIndex < 0) {
-        newIndex = tasks.length - 1
-    }
-    setCurrentIndex(newIndex)
-    carouselRef.current.scrollLeft = newIndex * itemWidth;
+    newIndex = tasks.length - itemsPerView
   }
-
+  setCurrentIndex(newIndex)
+  carouselRef.current.scrollLeft = newIndex * 300;
+}
   return (
     <>
     <div className={styles.carousel} ref={carouselRef}>

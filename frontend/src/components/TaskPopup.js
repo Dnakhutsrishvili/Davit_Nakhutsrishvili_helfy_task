@@ -36,7 +36,6 @@ function TaskPopup({ mode, task, isOpen, onClose, onSave }) {
         onSave(formdata)
         onClose()
     }
-
     if(!isOpen)return null
   return (
     <div className='overlay'>
@@ -57,7 +56,7 @@ function TaskPopup({ mode, task, isOpen, onClose, onSave }) {
         <input
         name='description'
         type='text'
-        value={formdata.title}
+        value={formdata.description}
         onChange={handleChange}
         disabled={mode==='view'}></input>
         </div>

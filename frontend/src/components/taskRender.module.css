@@ -1,0 +1,26 @@
+.carousel {
+    display: relative;
+    width: 200px;
+    overflow: scroll;
+    padding: 10px;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    margin: 0 auto;
+}
+
+.carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel ul {
+    display: flex;
+    width: fit-content;
+}
+
+.carousel ul li {
+    width: 200px;
+    height: 200px;
+    list-style: none;
+    scroll-snap-align: start;
+    cursor: pointer;
+}

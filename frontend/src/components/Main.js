@@ -6,6 +6,7 @@ const options=['All','Complated','Pending']
 
 function Main() {
    const [tasks,setTasks] = useState([]);
+   const [filteredTasks, setFilteredTasks] = useState([]);
    const [selectedValue,setSelectedValue]= useState('');
    const [popupOpen, setPopupOpen] = useState(false);
    const [mode, setMode] = useState('create');
@@ -20,6 +21,7 @@ const fetchTasks=async()=>{
      if(!response.ok) throw new Error('failed fetch tasks')
      const data= await response.json()
      setTasks(data.tasks || []);
+     setFilteredTasks(data.tasks || []);
     } catch (error) {
     console.error(error);
     }
@@ -49,12 +51,25 @@ try {
         e.preventDefault();
     }
     const handleChange=(e)=>{
-        setSelectedValue(e.target.value)
+        if(e.target.value==='Complated'){
+        setSelectedValue(true)
+        }
+        if(e.target.value==='Pending'){
+        setSelectedValue(false)
+        }
+        if(e.target.value==='All'){
+        setSelectedValue(null)
+        }
     }
 
   const handleAddTask = () => {
     setMode('create');
     setSelectedTask(null);
+    setPopupOpen(true);
+  };
+  const handleViewTask = (task) => {
+    setMode('view');
+    setSelectedTask(task);
     setPopupOpen(true);
   };
 
@@ -91,6 +106,15 @@ try {
     console.error(error);
     }
   }
+  const handleFilter = () => {
+  if (selectedValue === null) {
+    setFilteredTasks(tasks);
+  } else {
+    setFilteredTasks(
+      tasks.filter((task) => task.completed === selectedValue)
+    );
+  }
+}
   return (
     <main>
      <button onClick={handleAddTask}>
@@ -99,7 +123,7 @@ try {
      <div className='filter'>
 <form onSubmit={handleSubmit}>
 <label htmlFor='select-option'>choose option</label>
-<select id='select-option' value={selectedValue} onChange={handleChange}>
+<select id='select-option' onChange={handleChange}>
     <option value=''>choose option</option>
     {options.map((opt)=>(
 <option key={opt} value={opt}>
@@ -107,13 +131,14 @@ try {
 </option>
     ) )}
 </select>
-<button type='submit'>filter</button>
+<button onClick={handleFilter} type='submit'>filter</button>
         </form>
-        <TaskRender 
-        tasks={tasks}
-        onToggleChange={handleToggle}
-        getSelectedTask={getSelectedTask}
-        getId={handleDelete}
+<TaskRender 
+tasks={filteredTasks}
+onToggleChange={handleToggle}
+getSelectedTask={getSelectedTask}
+getId={handleDelete}
+handleViewTask={handleViewTask}
         />
      </div>
 <TaskPopup

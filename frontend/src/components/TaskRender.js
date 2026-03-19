@@ -2,7 +2,7 @@ import {  useRef ,useState,useEffect} from "react"
 import Checkbox from "./Checkbox"
 import styles from './taskRender.module.css'
 
-function TaskRender({tasks ,onToggleChange,getSelectedTask,getId}) {
+function TaskRender({tasks ,onToggleChange,getSelectedTask,getId,handleViewTask}) {
     const [currentIndex, setCurrentIndex] = useState(0)
     const [itemsPerView, setItemsPerView] = useState(1)
     let carouselRef=useRef(null)
@@ -55,7 +55,7 @@ function handleLeftClick() {
     <div className={styles.carousel} ref={carouselRef}>
     <ul>
 {tasks.map(task=>(
-    <li key={task.id}>
+    <li onClick={()=>handleViewTask} key={task.id}>
         <h4>{task.title}</h4>
         <p>{task.description}</p>
         <p>{task.priority}</p>

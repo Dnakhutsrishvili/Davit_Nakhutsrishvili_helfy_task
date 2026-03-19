@@ -4,7 +4,7 @@ const router = express.Router();
 const tasks=[{
 id: 1,
 title: 'complate task',
-description: 'in 4 hours',
+description: 'in 3 hours',
 completed: false,
 createdAt: new Date(),
 priority: 'high'
@@ -20,7 +20,7 @@ priority: 'high'
 {
 id: 3,
 title: 'complate task',
-description: 'in 4 hours',
+description: 'in 1 hours',
 completed: false,
 createdAt: new Date(),
 priority: 'high'
@@ -28,7 +28,7 @@ priority: 'high'
 {
 id: 4,
 title: 'complate task',
-description: 'in 4 hours',
+description: 'in 1 hours',
 completed: false,
 createdAt: new Date(),
 priority: 'high'
@@ -36,8 +36,8 @@ priority: 'high'
 {
 id: 5,
 title: 'complate task',
-description: 'in 4 hours',
-completed: false,
+description: 'in 2 hours',
+completed: true,
 createdAt: new Date(),
 priority: 'high'
 },
@@ -45,9 +45,9 @@ priority: 'high'
 id: 6,
 title: 'complate task',
 description: 'in 4 hours',
-completed: false,
+completed: true,
 createdAt: new Date(),
-priority: 'high'
+priority: 'low'
 },
 {
 id: 7,
@@ -55,7 +55,7 @@ title: 'complate task',
 description: 'in 4 hours',
 completed: false,
 createdAt: new Date(),
-priority: 'high'
+priority: 'low'
 },
 {
 id: 8,

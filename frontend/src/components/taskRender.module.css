@@ -22,11 +22,43 @@
 
 .carousel ul li {
     width: 300px;
-    height: 200px;
+    height: 100%;
     list-style: none;
     scroll-snap-align: start;
-    cursor: pointer;
     flex-shrink: 0;
+    padding: 1rem;
+}
+
+.btnParent {
+    padding: 1rem;
+}
+
+.btnParent button {
+    width: 60px;
+}
+
+.carousel h4 {
+    font-size: 1.2rem;
+    margin: 0;
+    cursor: pointer;
+}
+
+.priorityHigh {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    font-weight: bold;
+}
+
+.priorityMedium {
+    background-color: #fef3c7;
+    color: #b45309;
+    font-weight: 600;
+}
+
+.priorityLow {
+    background-color: #d1fae5;
+    color: #065f46;
+    font-weight: 500;
 }
 
 @media (min-width: 768px) {

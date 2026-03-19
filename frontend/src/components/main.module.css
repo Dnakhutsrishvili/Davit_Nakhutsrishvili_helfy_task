@@ -1,0 +1,21 @@
+.btn {
+    margin: auto;
+    margin-bottom: 2rem;
+    width: 60%;
+    font-size: 1.2rem;
+}
+
+.filter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 1rem;
+}
+
+.filter select {
+    height: 30px;
+    width: 120px;
+    outline: none;
+}

@@ -1,0 +1,26 @@
+.title {
+    font-size: 2rem;
+    text-transform: capitalize;
+}
+
+.container {
+    display: flex;
+    padding: 1rem;
+}
+
+.container label {
+    width: 30%;
+    text-align: left;
+}
+
+.container input {
+    width: 60%;
+    padding: 0.4rem;
+    outline: none;
+}
+
+.container select {
+    width: 64%;
+    padding: 0.4rem;
+    outline: none;
+}

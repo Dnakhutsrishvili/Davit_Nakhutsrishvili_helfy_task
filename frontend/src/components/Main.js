@@ -1,11 +1,14 @@
 import { useState ,useEffect} from 'react'
 import TaskPopup from './TaskPopup';
 import TaskRender from './TaskRender';
+import Loader from './Loader';
+import styles from './main.module.css'
 
 const options=['All','Complated','Pending']
 
 function Main() {
    const [tasks,setTasks] = useState([]);
+   const [loading, setLoading] = useState(false)
    const [filteredTasks, setFilteredTasks] = useState([]);
    const [selectedValue,setSelectedValue]= useState('');
    const [popupOpen, setPopupOpen] = useState(false);
@@ -16,6 +19,7 @@ useEffect(() => {
     fetchTasks()
   }, []);
 const fetchTasks=async()=>{
+  setLoading(true)
     try {
      const response=await fetch("http://localhost:4000/api/tasks");
      if(!response.ok) throw new Error('failed fetch tasks')
@@ -24,11 +28,14 @@ const fetchTasks=async()=>{
      setFilteredTasks(data.tasks || []);
     } catch (error) {
     console.error(error);
+    }finally{
+    setLoading(false)
     }
 }
 
 const handleSaveTask=async(task)=>{
 try {
+  setLoading(true)
     const url=mode==='create'
         ? 'http://localhost:4000/api/tasks'
         : `http://localhost:4000/api/tasks/${selectedTask.id}`;
@@ -44,6 +51,8 @@ try {
     await fetchTasks()
 } catch (error) {
     console.log(error)
+}finally{
+  setLoading(false)
 }
     }
 
@@ -74,6 +83,7 @@ try {
   };
 
   const handleToggle=async(taskId)=>{
+    setLoading(true)
     try {
         const response=await fetch(`http://localhost:4000/api/tasks/${taskId}/toggle`,{
             method:'PATCH',
@@ -85,6 +95,8 @@ try {
 
     } catch (error) {
     console.error(error);
+    }finally{
+      setLoading(false)
     }
   }
   const getSelectedTask=(task)=>{
@@ -93,6 +105,7 @@ try {
     setPopupOpen(true);
   }
   const handleDelete=async(taskId)=>{
+    setLoading(true)
  try {
      const response=await fetch(`http://localhost:4000/api/tasks/${taskId}`,{
             method:'DELETE',
@@ -104,6 +117,8 @@ try {
 
     } catch (error) {
     console.error(error);
+    }finally{
+      setLoading(false)
     }
   }
   const handleFilter = () => {
@@ -117,14 +132,15 @@ try {
 }
   return (
     <main>
-     <button onClick={handleAddTask}>
+      {loading && <Loader />}
+     <button className={styles.btn} onClick={handleAddTask}>
        + add new task
      </button>
-     <div className='filter'>
-<form onSubmit={handleSubmit}>
-<label htmlFor='select-option'>choose option</label>
+     <div>
+<form onSubmit={handleSubmit} className={styles.filter}>
+<label htmlFor='select-option'>Choose for filter</label>
 <select id='select-option' onChange={handleChange}>
-    <option value=''>choose option</option>
+    <option value=''>choose</option>
     {options.map((opt)=>(
 <option key={opt} value={opt}>
     {opt}

@@ -54,17 +54,20 @@ function handleLeftClick() {
     <>
     <div className={styles.carousel} ref={carouselRef}>
     <ul>
-{tasks.map(task=>(
-    <li onClick={()=>handleViewTask} key={task.id}>
-        <h4>{task.title}</h4>
-        <p>{task.description}</p>
-        <p>{task.priority}</p>
+{tasks.length!==0?tasks.map(task=>(
+    <li className={task.priority=== 'high'?styles.priorityHigh: task.priority === 'medium'?styles.priorityMedium:styles.prioritylow}  key={task.id}>
+        <h4 onClick={()=>handleViewTask(task)}>{task.title}</h4>
+        <p>ℹ️{task.description}</p>
+        <p>Priority: {task.priority === 'high' ? '🔥 High' : task.priority === 'medium' ? '⚠️ Medium' : '🟢 Low'}</p>
         <Checkbox label={'done'} value={task.completed} onChange={()=>handleToggle(task.id)}/>
+          <div className={styles.btnParent}>
         <button onClick={()=>handleSelectedTask(task)}>edit</button>
         <button onClick={()=>handleDelete(task.id)}>delete</button>
+          </div>
+       
     </li>
 )
-)}
+):<h2>There is no Tasks</h2>}
     </ul>
     </div>
     <div>

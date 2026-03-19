@@ -1,4 +1,5 @@
 import  { useEffect, useState } from 'react'
+import styles from './taskPopup.module.css'
 
 function TaskPopup({ mode, task, isOpen, onClose, onSave }) {
    const [formdata,setFormdata]= useState({
@@ -40,9 +41,9 @@ function TaskPopup({ mode, task, isOpen, onClose, onSave }) {
   return (
     <div className='overlay'>
         <div className='modal'>
-    <h2>{mode+'Task'}</h2>
+    <h2 className={styles.title}>{mode+' Task'}</h2>
     <div>
-        <div>
+        <div className={styles.container}>
     <label>Title</label>
         <input
         name='title'
@@ -51,7 +52,7 @@ function TaskPopup({ mode, task, isOpen, onClose, onSave }) {
         onChange={handleChange}
         disabled={mode==='view'}></input>
         </div>
-        <div>
+        <div  className={styles.container}>
     <label>Description</label>
         <input
         name='description'
@@ -60,7 +61,7 @@ function TaskPopup({ mode, task, isOpen, onClose, onSave }) {
         onChange={handleChange}
         disabled={mode==='view'}></input>
         </div>
-          <div>
+          <div  className={styles.container}>
     <label>Priority</label>
         <select
         name='priority'
@@ -69,7 +70,7 @@ function TaskPopup({ mode, task, isOpen, onClose, onSave }) {
         disabled={mode==='view'}>
             <option value='low'>Low</option>
             <option value='medium'>Medium</option>
-            <option value='high'>High</option>
+            <option value='high'>high</option>
         </select>
         </div>
     </div>

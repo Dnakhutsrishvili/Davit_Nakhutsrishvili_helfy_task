@@ -1,23 +1,19 @@
 import express from 'express';
 
 const router = express.Router();
-const tasks=[];
-// const task={
-// id: number,
-// title: string,
-// description: string,
-// completed: boolean,
-// createdAt: Date,
-// priority: 'low' | 'medium' | 'high'
-// }
+const tasks=[{
+id: 1,
+title: 'complate task',
+description: 'in 4 hours',
+completed: false,
+createdAt: new Date(),
+priority: 'high'
+}];
 
-
-// GET /api/tasks - Get all tasks
-router.get('/', (req, res) => {
+router.get('/', (req,res) => {
   res.status(200).json({tasks:tasks});
 });
 
-// POST /api/tasks - Create a new task
 router.post('/', (req, res) => {
 if(!req.body){
     res.status(400);
@@ -35,7 +31,6 @@ tasks.push(newTask)
  res.status(201).json({task: newTask, message: 'task created'});
 });
 
-// PUT /api/tasks/:id - Update a task
 router.put('/:id', (req, res) => {
 if(!req.body){
     res.status(400);
@@ -58,8 +53,6 @@ if (index !== -1) {
 res.status(200).json({task: newTask, message: 'task updated'});
 });
 
-// DELETE /api/tasks/:id - Delete a task
-
 router.delete('/:id', (req, res) => {
  const taskId = parseInt(req.params.id);
  const index = tasks.findIndex(task => task.id === taskId)
@@ -69,9 +62,6 @@ router.delete('/:id', (req, res) => {
  const deletedTask = tasks.splice(index, 1);
  res.status(200).json({ message: 'Task deleted', task: deletedTask[0] });
 });
-
-
-// PATCH /api/tasks/:id/toggle - Toggle task completion status
 
 router.patch('/:id/toggle', (req, res) => {
   const taskId = parseInt(req.params.id);

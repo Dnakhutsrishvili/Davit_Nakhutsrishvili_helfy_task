@@ -43,5 +43,13 @@ tasks.push(newTask)
 
 // PATCH /api/tasks/:id/toggle - Toggle task completion status
 
+router.patch('/:id/toggle', (req, res) => {
+  const taskId = parseInt(req.params.id);
+  const index = tasks.findIndex(task => task.id === taskId)
+if (index !== -1) {
+  tasks[index].completed =!tasks[index].completed ; 
+}
+ res.status(200).json({message: 'task updated'});
+});
 
 export default router;

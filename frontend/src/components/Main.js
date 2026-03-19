@@ -1,5 +1,6 @@
 import { useState ,useEffect} from 'react'
 import TaskPopup from './TaskPopup';
+import TaskRender from './TaskRender';
 
 const options=['All','Complated','Pending']
 
@@ -17,11 +18,19 @@ function Main() {
 
 
 useEffect(() => {
-    fetch("http://localhost:4000/api/tasks")
-      .then(res => res.json())
-      .then(data => setTasks(data))
-      .catch(err => console.error(err));
+    fetchTasks()
   }, []);
+const fetchTasks=async()=>{
+    try {
+     const response=await fetch("http://localhost:4000/api/tasks");
+     if(!response.ok) throw new Error('failed fetch tasks')
+     const data= await response.json()
+     setTasks(data.tasks || []);
+    } catch (error) {
+    console.error(error);
+    }
+}
+
 const handleSaveTask=async(task)=>{
 try {
     const url=mode==='create'
@@ -36,7 +45,7 @@ try {
     })
     
     if(!response.ok) throw new Error('failed to save task')
-    
+    await fetchTasks()
 } catch (error) {
     console.log(error)
 }
@@ -54,6 +63,21 @@ try {
     setSelectedTask(null);
     setPopupOpen(true);
   };
+
+  const handleToggle=async(taskId)=>{
+    try {
+        const response=await fetch(`http://localhost:4000/api/tasks/${taskId}/toggle`,{
+            method:'PATCH',
+            headers:{'Content-Type': 'application/json'},
+        })
+    
+    if (!response.ok) throw new Error('Failed to toggle task')
+    await fetchTasks();
+
+    } catch (error) {
+    console.error(error);
+    }
+  }
   return (
     <main>
      <button onClick={handleAddTask}>
@@ -72,6 +96,7 @@ try {
 </select>
 <button type='submit'>filter</button>
         </form>
+        <TaskRender tasks={tasks} onToggleChange={handleToggle}/>
      </div>
 <TaskPopup
  isOpen={popupOpen}
